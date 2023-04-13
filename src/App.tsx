@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { HeaderBanner } from "./components/HeaderBanner";
 
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
