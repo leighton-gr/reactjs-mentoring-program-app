@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HeaderBanner } from "./components/HeaderBanner";
 
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
@@ -6,8 +6,9 @@ import { MovieSection } from "./components/MovieSection/MovieSection";
 
 import './styles.scss';
 
-import { ErrorBoundary } from 'react-error-boundary';
+// import { ErrorBoundary } from 'react-error-boundary';
 
+import ErrorBoundary from './errorBoundary';
 import { ErrorBoundaryFallback } from './components/ErrorBoundaryFallback';
 
 // sets default styles
@@ -22,15 +23,24 @@ const theme = extendTheme({
 })
 
 export const App = () => {
-  return (
+    //     set search query to empty string
+    const [q, setQ] = useState("");
+    //     set search parameters
+    //     we only what to search countries by title
+    //     this list can be longer if you want
+    //     you can search countries even by their population
+    // just add it to this array
+    const [searchParam] = useState(["title"]);
+
+    return (
         <ChakraProvider theme={theme}>
             <div className='application__body'>
                 <HeaderBanner/>
-                <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+                <ErrorBoundary>
                     <MovieSection />
                 </ErrorBoundary>
             </div>
         </ChakraProvider>
-  )
+    )
 }
 export default App;

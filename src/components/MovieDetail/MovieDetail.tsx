@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export type Props = {
     title: string;
@@ -14,4 +15,10 @@ export const MovieDetail = ({ title, genre, releaseDate }: Props) => {
             <p>{releaseDate}</p>
         </>
     )
+}
+
+MovieDetail.propTypes = {
+    title: PropTypes.string,
+    genre: PropTypes.string,
+    releaseDate: PropTypes.string,
 }
