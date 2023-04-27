@@ -1,23 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     Button,
-    FormControl,
-    FormLabel,
-    Input,
     Menu,
     MenuButton,
     MenuItem,
     MenuList,
-    Select,
     useDisclosure
-} from "@chakra-ui/react";
-import { ModalTemplate } from "../ModalTemplate";
+} from '@chakra-ui/react';
+import { EditModal } from '../ModalTemplate/EditModal';
+import { MovieContext } from '../../providers/MovieProvider';
+import { Movie } from '../../types/types';
+import { DeleteModal } from '../ModalTemplate/DeleteModal';
 
-export const ItemContextMenu = () => {
+type Props = {
+    id?: number;
+}
+
+export const ItemContextMenu = ({ id }: Props) => {
     const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure();
-    const { isOpen: isDeleteOpen , onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
+    const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
 
-    // use context api to get current movie details?
+    const [movieContext] = useContext(MovieContext);
+
+    // currently passing through all ids, need to pass just one
+    const movieData = movieContext.map((movies: Movie[]) => movies);
+    // const thing = movieData.forEach((movie: Movie) => movie.id === movie.id);
 
     return (
         <>
@@ -31,32 +38,8 @@ export const ItemContextMenu = () => {
                 </MenuList>
             </Menu>
             {/* Todo move modals to own components */}
-            <ModalTemplate isOpen={isEditOpen} onClose={onEditClose} title={'Edit Movie'}>
-                {/*Todo trigger completion modal*/}
-                <FormControl isRequired>
-                    <FormLabel>First name</FormLabel>
-                    <Input placeholder='Title' />
-                    <FormLabel>Release Date</FormLabel>
-                    <Input placeholder='Select Date' type='date' />
-                    <FormLabel>Movie Url</FormLabel>
-                    <Input placeholder='https://' />
-                    <FormLabel>Rating</FormLabel>
-                    <Input placeholder='7.8' type='number' />
-                    <FormLabel>Country</FormLabel>
-                    <Select placeholder='Select Genre'>
-                        <option>Sci-Fi</option>
-                        <option>Fantasy</option>
-                        <option>Comedy</option>
-                    </Select>
-                    <FormLabel>Runtime</FormLabel>
-                    <Input placeholder='minutes' type='number' />
-                    <FormLabel>Overview</FormLabel>
-                    <Input placeholder='Movie description' />
-                </FormControl>
-            </ModalTemplate>
-            <ModalTemplate isOpen={isDeleteOpen} onClose={onDeleteClose} title={'Delete Movie'} isSubmitButtonVisible={false}>
-                <p>Are you sure you want to delete this movie?</p>
-            </ModalTemplate>
+            <EditModal isEditOpen={isEditOpen} onEditClose={onEditClose} />
+            <DeleteModal isDeleteOpen={isDeleteOpen} onDeleteClose={onDeleteClose}/>
         </>
     )
 }

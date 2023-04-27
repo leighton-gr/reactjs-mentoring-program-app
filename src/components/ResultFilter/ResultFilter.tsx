@@ -2,20 +2,14 @@ import React from 'react';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { ItemImage } from "../ItemImage/ItemImage";
 import { MovieDetail } from "../MovieDetail";
+import { Movie } from '../../types/types';
+import { ItemContextMenu } from '../ItemContextMenu/ItemContextMenu';
 
 type Props = {
-    movies: Movie[];
+    movieData: Movie[];
 }
 
-type Movie = {
-    id: number;
-    title: string;
-    releaseDate: string;
-    genre: string;
-    image: string;
-}
-
-export const ResultFilter = ({ movies }: Props) => {
+export const ResultFilter = ({ movieData }: Props) => {
     return (
         <Tabs>
             <TabList>
@@ -27,20 +21,22 @@ export const ResultFilter = ({ movies }: Props) => {
             <TabPanels>
                         <TabPanel>
                             <p>All</p>
-                            {movies.map((movie) =>
+                            {movieData.map((movie: Movie) =>
                                     <>
                                         <ItemImage imageUrl={movie.image}/>
+                                        <ItemContextMenu />
                                         <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate} title={movie.title}/>
                                     </>
                                 )}
                         </TabPanel>
                         <TabPanel>
                             <p>Sci-Fi</p>
-                            {movies.map((movie) =>
+                            {movieData.map((movie: Movie) =>
                                 <>
                                     {movie.genre === 'Sci-Fi' ? (
                                         <>
                                             <ItemImage imageUrl={movie.image}/>
+                                            <ItemContextMenu id={movie.id}/>
                                             <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate} title={movie.title}/>
                                         </>
                                     ) : null }
@@ -49,11 +45,12 @@ export const ResultFilter = ({ movies }: Props) => {
                         </TabPanel>
                         <TabPanel>
                             <p>Fantasy</p>
-                            {movies.map((movie) =>
+                            {movieData.map((movie: Movie) =>
                                 <>
                                     {movie.genre === 'Fantasy' ? (
                                         <>
                                             <ItemImage imageUrl={movie.image}/>
+                                            <ItemContextMenu id={movie.id}/>
                                             <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate} title={movie.title}/>
                                         </>
                                     ) : null }
@@ -62,11 +59,12 @@ export const ResultFilter = ({ movies }: Props) => {
                         </TabPanel>
                         <TabPanel>
                             <p>Comedy</p>
-                            {movies.map((movie) =>
+                            {movieData.map((movie: Movie) =>
                                 <>
                                     {movie.genre === 'Comedy' ? (
                                         <>
                                             <ItemImage imageUrl={movie.image}/>
+                                            <ItemContextMenu id={movie.id}/>
                                             <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate} title={movie.title}/>
                                         </>
                                     ) : null }

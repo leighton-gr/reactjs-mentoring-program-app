@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 import {
     Button,
     Modal,
@@ -8,7 +8,7 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 type Props = {
     isOpen?: boolean;
@@ -25,10 +25,7 @@ export const ModalTemplate = ({
                                   onClose,
                                   title,
                                   children,
-                                  isSubmitButtonVisible,
-                                  isResetButtonVisible,
-                                  isConfirmButtonVisible
-}: Props) => {
+                              }: Props) => {
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -40,15 +37,13 @@ export const ModalTemplate = ({
                         {children}
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onClose}>
+                        <Button colorScheme="blue" mr={3} onClick={onClose}>
                             Close
                         </Button>
                         {/*Add reset and confirm buttons*/}
-                        {!isSubmitButtonVisible && (
-                            <Button variant='ghost' onClick={onClose}>
-                                Submit
-                            </Button>
-                        )}
+                        <Button variant="ghost" onClick={onClose} type='submit'>
+                            Confirm
+                        </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
