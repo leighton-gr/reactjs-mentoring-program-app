@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react';
 import { EditModal } from '../ModalTemplate/EditModal';
 import { MovieContext } from '../../providers/MovieProvider';
-import { Movie } from '../../types/types';
 import { DeleteModal } from '../ModalTemplate/DeleteModal';
 
 type Props = {
@@ -22,8 +21,8 @@ export const ItemContextMenu = ({ id }: Props) => {
 
     const [movieContext] = useContext(MovieContext);
 
-    // currently passing through all ids, need to pass just one
-    const movieData = movieContext.map((movies: Movie[]) => movies);
+    // getId for selected movie
+    // const movieData = movieContext.map((movies: Movie[]) => movies);
     // const thing = movieData.forEach((movie: Movie) => movie.id === movie.id);
 
     return (

@@ -8,8 +8,13 @@ export const getAllMovies = async () => {
 };
 
 export const addMovie = async (data: Movie) => {
+    const { id, title, releaseDate, genre, image } = data;
     return axios.post(`${url}/movies`, {
-        data
+        id,
+        title,
+        releaseDate,
+        genre,
+        image
     })
 };
 

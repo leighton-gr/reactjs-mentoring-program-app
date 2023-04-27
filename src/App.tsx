@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { HeaderBanner } from './components/HeaderBanner';
 
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { Button, ChakraProvider, extendTheme, Input } from '@chakra-ui/react'
 import { MovieSection } from './components/MovieSection/MovieSection';
 
 import './styles.scss';
@@ -25,9 +25,12 @@ const theme = extendTheme({
     },
 })
 
+const buttonColorScheme = 'red';
+
 export const App = () => {
+    const [movies, setMovies] = useState([])
     //     set search query to empty string
-    const [q, setQ] = useState('');
+    const [query, setQuery] = useState('');
     //     set search parameters
     //     we only what to search countries by title
     //     this list can be longer if you want
@@ -39,6 +42,12 @@ export const App = () => {
         <ChakraProvider theme={theme}>
                 <div className="application__body">
                     <HeaderBanner/>
+                    <Input placeholder="What do you want to watch?"
+                           value={query}
+                           onChange={(e) => setQuery(e.target.value)}
+                           type="search"
+                           name="search"/>
+                    <Button colorScheme={buttonColorScheme}>Search</Button>
                     <ErrorBoundary>
                         <MovieProvider>
                             <MovieSection/>

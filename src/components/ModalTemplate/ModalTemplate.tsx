@@ -18,6 +18,7 @@ type Props = {
     isSubmitButtonVisible?: boolean;
     isResetButtonVisible?: boolean;
     isConfirmButtonVisible?: boolean;
+    formTypeId?: string;
 }
 
 export const ModalTemplate = ({
@@ -25,6 +26,7 @@ export const ModalTemplate = ({
                                   onClose,
                                   title,
                                   children,
+                                  formTypeId
                               }: Props) => {
     return (
         <>
@@ -41,7 +43,7 @@ export const ModalTemplate = ({
                             Close
                         </Button>
                         {/*Add reset and confirm buttons*/}
-                        <Button variant="ghost" onClick={onClose} type='submit'>
+                        <Button form={formTypeId} variant="ghost" onClick={onClose} type='submit'>
                             Confirm
                         </Button>
                     </ModalFooter>
