@@ -1,0 +1,1 @@
+export { ResultFilter } from './ResultFilter';
