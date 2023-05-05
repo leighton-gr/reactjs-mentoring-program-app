@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     Button,
     FormControl,
@@ -9,11 +9,21 @@ import {
 import { ModalTemplate } from '../ModalTemplate';
 import { addMovie } from '../../api/movies';
 import { useFormik } from 'formik';
+import { SearchBar } from '../SearchBar';
+import { ExtendedMovieDetail } from '../ExtendedMovieDetail/ExtendedMovieDetail';
+import { MovieContext } from '../../providers/MovieProvider';
+import { Movie } from '../../types/types';
 
 const buttonColorScheme = 'red';
 
 export const HeaderBanner = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [movieContext] = useContext(MovieContext);
+    //todo use prop
+    const showExtendedMovieDetails = false;
+
+    const movieData = movieContext.map((movies: Movie[]) => movies);
+
     const formTypeId = 'addMovieForm';
 
     const formik = useFormik({
@@ -51,6 +61,9 @@ export const HeaderBanner = () => {
                     </FormControl>
                 </form>
             </ModalTemplate>
+            {showExtendedMovieDetails ? (
+                <ExtendedMovieDetail movie={movieData}/>
+            ) : <SearchBar /> }
         </>
     )
 }

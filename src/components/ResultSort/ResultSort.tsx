@@ -1,23 +1,34 @@
-import React from 'react';
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import React, { useState } from 'react';
+import { Select } from '@chakra-ui/react';
 
-export const ResultSort = () => {
+type Props = {
+    setSortBy: (v: string) => void;
+}
+
+const dropdownData = {
+    options: [
+        {
+            label: 'Release Date',
+            value: 'releaseDate',
+        },
+    ],
+};
+
+export const ResultSort = ({ setSortBy }: Props) => {
+    const [selectedOption, setSelectedOption] = useState(dropdownData.options[0].value)
+    const handleCallback = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedOption(e.target.value);
+        setSortBy(selectedOption)
+    }
+
     return (
         <>
             <span>Sort By</span>
-            <Menu>
-                {({ isOpen }) => (
-                    <>
-                        <MenuButton isActive={isOpen} as={Button}>
-                            {isOpen ? 'Release Date' : 'Genre'}
-                        </MenuButton>
-                        <MenuList>
-                            <MenuItem>Release Date</MenuItem>
-                            <MenuItem>Genre</MenuItem>
-                        </MenuList>
-                    </>
-                )}
-            </Menu>
+            <Select onChange={e => handleCallback(e)} value={selectedOption || 'releaseDate'}>
+                {dropdownData.options.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+            </Select>
         </>
     )
 }

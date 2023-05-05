@@ -1,15 +1,16 @@
-import React from 'react';
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import { ItemImage } from "../ItemImage/ItemImage";
-import { MovieDetail } from "../MovieDetail";
+import React, { useContext } from 'react';
+import { SimpleGrid, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { ItemImage } from '../ItemImage/ItemImage';
+import { MovieDetail } from '../MovieDetail';
 import { Movie } from '../../types/types';
 import { ItemContextMenu } from '../ItemContextMenu/ItemContextMenu';
 
 type Props = {
-    movieData: Movie[];
+    movieData?: Movie[];
 }
 
 export const ResultFilter = ({ movieData }: Props) => {
+    // Todo refactor with dynamic data
     return (
         <Tabs>
             <TabList>
@@ -19,58 +20,70 @@ export const ResultFilter = ({ movieData }: Props) => {
                 <Tab>Comedy</Tab>
             </TabList>
             <TabPanels>
-                        <TabPanel>
-                            <p>All</p>
-                            {movieData.map((movie: Movie) =>
-                                    <>
-                                        <ItemImage imageUrl={movie.image}/>
-                                        <ItemContextMenu />
-                                        <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate} title={movie.title}/>
-                                    </>
-                                )}
-                        </TabPanel>
-                        <TabPanel>
-                            <p>Sci-Fi</p>
-                            {movieData.map((movie: Movie) =>
-                                <>
-                                    {movie.genre === 'Sci-Fi' ? (
-                                        <>
-                                            <ItemImage imageUrl={movie.image}/>
-                                            <ItemContextMenu id={movie.id}/>
-                                            <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate} title={movie.title}/>
-                                        </>
-                                    ) : null }
-                                </>
-                            )}
-                        </TabPanel>
-                        <TabPanel>
-                            <p>Fantasy</p>
-                            {movieData.map((movie: Movie) =>
-                                <>
-                                    {movie.genre === 'Fantasy' ? (
-                                        <>
-                                            <ItemImage imageUrl={movie.image}/>
-                                            <ItemContextMenu id={movie.id}/>
-                                            <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate} title={movie.title}/>
-                                        </>
-                                    ) : null }
-                                </>
-                            )}
-                        </TabPanel>
-                        <TabPanel>
-                            <p>Comedy</p>
-                            {movieData.map((movie: Movie) =>
-                                <>
-                                    {movie.genre === 'Comedy' ? (
-                                        <>
-                                            <ItemImage imageUrl={movie.image}/>
-                                            <ItemContextMenu id={movie.id}/>
-                                            <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate} title={movie.title}/>
-                                        </>
-                                    ) : null }
-                                </>
-                            )}
-                        </TabPanel>
+                <TabPanel>
+                    <p>All</p>
+                    <SimpleGrid columns={3} spacing={5}>
+                        {movieData.map((movie: Movie) =>
+                            <div key={movie.id}>
+                                <ItemImage imageUrl={movie.image}/>
+                                <ItemContextMenu/>
+                                <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate}
+                                             title={movie.title}/>
+                            </div>
+                        )}
+                    </SimpleGrid>
+                </TabPanel>
+                <TabPanel>
+                    <p>Sci-Fi</p>
+                    <SimpleGrid columns={3} spacing={5}>
+                    {movieData.map((movie: Movie) =>
+                        <>
+                            {movie.genre === 'Sci-Fi' ? (
+                                <div>
+                                    <ItemImage imageUrl={movie.image}/>
+                                    <ItemContextMenu id={movie.id}/>
+                                    <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate}
+                                                 title={movie.title}/>
+                                </div>
+                            ) : null}
+                        </>
+                    )}
+                    </SimpleGrid>
+                </TabPanel>
+                <TabPanel>
+                    <p>Fantasy</p>
+                    <SimpleGrid columns={3} spacing={5}>
+                    {movieData.map((movie: Movie) =>
+                        <>
+                            {movie.genre === 'Fantasy' ? (
+                                <div>
+                                    <ItemImage imageUrl={movie.image}/>
+                                    <ItemContextMenu id={movie.id}/>
+                                    <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate}
+                                                 title={movie.title}/>
+                                </div>
+                            ) : null}
+                        </>
+                    )}
+                    </SimpleGrid>
+                </TabPanel>
+                <TabPanel>
+                    <p>Comedy</p>
+                    <SimpleGrid columns={3} spacing={5}>
+                    {movieData.map((movie: Movie) =>
+                        <>
+                            {movie.genre === 'Comedy' ? (
+                                <div>
+                                    <ItemImage imageUrl={movie.image}/>
+                                    <ItemContextMenu id={movie.id}/>
+                                    <MovieDetail key={movie.id} genre={movie.genre} releaseDate={movie.releaseDate}
+                                                 title={movie.title}/>
+                                </div>
+                            ) : null}
+                        </>
+                    )}
+                    </SimpleGrid>
+                </TabPanel>
             </TabPanels>
         </Tabs>
     )

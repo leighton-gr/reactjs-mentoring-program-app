@@ -8,6 +8,7 @@ import { createContext } from 'react';
 import { getAllMovies } from '../api/movies';
 
 export const MovieContext = createContext([]);
+export const MovieDetailsFlagContext = createContext(null);
 
 export const MovieProvider = ({ children }: Props) => {
     const [ movies, setMovies ] = useState([]);
@@ -24,6 +25,16 @@ export const MovieProvider = ({ children }: Props) => {
 
     return (
         <MovieContext.Provider value={[ movies, setMovies ]}>
+            {children}
+        </MovieContext.Provider>
+    );
+};
+
+export const MovieDetailsFlagContextProvider = ({ children }: Props) => {
+    const [ movieDetailsFlagContext, setShowMovieDetailsFlagContext ] = useState(false);
+
+    return (
+        <MovieContext.Provider value={[ movieDetailsFlagContext, setShowMovieDetailsFlagContext ]}>
             {children}
         </MovieContext.Provider>
     );
