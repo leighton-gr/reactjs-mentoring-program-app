@@ -3,11 +3,7 @@ import { Button, Input } from '@chakra-ui/react';
 
 const buttonColorScheme = 'red';
 
-type Props = {
-    showSearchBar?: boolean;
-}
-
-export const SearchBar = ({ showSearchBar }: Props) => {
+export const SearchBar = () => {
     return (
         <>
             <Input placeholder="What do you want to watch?"

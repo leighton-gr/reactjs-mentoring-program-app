@@ -1,29 +1,39 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ResultFilter } from '../ResultFilter';
+import React, { useEffect, useState } from 'react';
 import { ResultSort } from '../ResultSort';
+
+import { useGetMoviesBySortOrderQuery } from '../../redux/api';
 import { ResultCount } from '../ResultCount';
-import { MovieContext } from '../../providers/MovieProvider';
-import { Movie } from '../../types/types';
+import { ResultFilter } from '../ResultFilter';
+import { useTypedSelector } from '../../redux/store';
+import { selectSortBy } from '../../redux/appSlice';
 
 export const MovieSection = () => {
-    const [sortBy, setSortBy] = useState<string>('releaseDate');
-    const [movies, setMoviesData] = useState<Movie[]>([]);
-    const [movieContext] = useContext(MovieContext);
-    const movieData = movieContext.map((movies: Movie[]) => movies);
+    const sortBy = useTypedSelector(selectSortBy);
+    const { data: movieData, isLoading } = useGetMoviesBySortOrderQuery({ sortBy: sortBy, sortOrder: 'desc' });
+    const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        // Todo add multiple sortBy options
-        const moviesByReleaseDate = movieData.sort((a: { releaseDate: string; }, b: { releaseDate: string; }) =>
-            (a.releaseDate > b.releaseDate) ? 1 : -1);
+        if(movieData) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore this property does exist on the object
+            setMovies(movieData.data)
+        }
+    })
 
-       setMoviesData(moviesByReleaseDate);
-    }, [movieContext]);
+    // todo - could use loading spinner
+    if (isLoading) {
+        return <div>Loading!</div>
+    }
 
     return (
         <>
-            <ResultSort setSortBy={setSortBy}/>
-            <ResultCount count={movieData.length}/>
-            <ResultFilter movieData={movies}/>
+            <ResultSort />
+            {movies &&
+                <>
+                    <ResultCount count={movies.length}/>
+                    <ResultFilter movieData={movies}/>
+                </>
+            }
         </>
     )
 }

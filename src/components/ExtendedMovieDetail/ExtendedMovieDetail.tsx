@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ItemImage } from '../ItemImage/ItemImage';
-import { MovieContext } from '../../providers/MovieProvider';
-import { Movie } from '../../types/types';
+import React from 'react';
+import { selectMovie } from '../../redux/appSlice';
+import { useTypedSelector } from '../../redux/store';
 
-export type Props = {
-    movie: Movie;
-}
+export const ExtendedMovieDetail = () => {
+    const movie = useTypedSelector(selectMovie);
 
-export const ExtendedMovieDetail = ({ movie }: Props) => {
     return (
         <div>
-            <ItemImage/>
-            <h1>Test</h1>
+            <img className="item__image" src={movie?.poster_path} alt={'alt'}/>
+            <h1>{movie.title}</h1>
+            <p>{movie.release_date}</p>
+            <p>{movie.overview}</p>
         </div>
     )
 }

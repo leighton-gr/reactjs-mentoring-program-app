@@ -1,7 +1,7 @@
 import React from 'react';
 import { ModalTemplate } from './ModalTemplate';
-import { deleteMovie } from '../../api/movies';
 import { Movie } from '../../types/types';
+import { useDeleteMovieMutation, useUpdateMovieMutation } from '../../redux/api';
 
 type Props = {
     isDeleteOpen: boolean;
@@ -10,6 +10,8 @@ type Props = {
 }
 
 export const DeleteModal = ({ isDeleteOpen, onDeleteClose, movieToDelete }: Props) => {
+    const [deleteMovie] = useDeleteMovieMutation();
+
     const deleteMovieOnClose = async () => {
         onDeleteClose();
         await deleteMovie(movieToDelete).catch(console.error);

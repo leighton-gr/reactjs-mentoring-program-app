@@ -8,5 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="MoviesAPI.ReactJS" />
+    <orderEntry type="module" module-name="barcadia" />
   </component>
 </module>

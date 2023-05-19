@@ -1,30 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Select } from '@chakra-ui/react';
+import { sortBy } from '../../redux/appSlice';
+import { useDispatch } from 'react-redux';
 
-type Props = {
-    setSortBy: (v: string) => void;
-}
-
-const dropdownData = {
+export const dropdownData = {
     options: [
         {
             label: 'Release Date',
-            value: 'releaseDate',
+            value: 'release_date',
+        },
+        {
+            label: 'Title',
+            value: 'title',
         },
     ],
 };
 
-export const ResultSort = ({ setSortBy }: Props) => {
-    const [selectedOption, setSelectedOption] = useState(dropdownData.options[0].value)
+const SORT_TYPES = {
+    DESC: 'desc',
+    ASC: 'asc',
+}
+
+export const ResultSort = () => {
+    const dispatch = useDispatch();
+
     const handleCallback = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedOption(e.target.value);
-        setSortBy(selectedOption)
+        console.log(e.target.value);
+        dispatch(sortBy(e.target.value));
     }
+
+    useEffect(() => {
+        dispatch(sortBy(dropdownData.options[0].value));
+    }, []);
 
     return (
         <>
             <span>Sort By</span>
-            <Select onChange={e => handleCallback(e)} value={selectedOption || 'releaseDate'}>
+            <Select onChange={handleCallback}>
                 {dropdownData.options.map(option => (
                     <option key={option.value} value={option.value}>{option.label}</option>
                 ))}
