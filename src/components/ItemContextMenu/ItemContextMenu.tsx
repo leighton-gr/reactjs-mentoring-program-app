@@ -1,19 +1,39 @@
-import React from 'react';
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import React, { useContext } from 'react';
+import {
+    Button,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    useDisclosure
+} from '@chakra-ui/react';
+import { EditModal } from '../ModalTemplate/EditModal';
+import { MovieContext } from '../../providers/MovieProvider';
+import { DeleteModal } from '../ModalTemplate/DeleteModal';
+import { Movie } from '../../types/types';
 
-export const ItemContextMenu = () => {
+type Props = {
+    movie?: Movie;
+}
+
+export const ItemContextMenu = ({ movie }: Props) => {
+    const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure();
+    const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
+
     return (
-        <Menu>
-            <MenuButton as={Button}>
-                Actions
-            </MenuButton>
-            <MenuList>
-                <MenuItem>Download</MenuItem>
-                <MenuItem>Create a Copy</MenuItem>
-                <MenuItem>Mark as Draft</MenuItem>
-                <MenuItem>Delete</MenuItem>
-                <MenuItem>Attend a Workshop</MenuItem>
-            </MenuList>
-        </Menu>
+        <>
+            <Menu>
+                <MenuButton as={Button}>
+                    ...
+                </MenuButton>
+                <MenuList>
+                    <MenuItem onClick={onEditOpen}>Edit</MenuItem>
+                    <MenuItem onClick={onDeleteOpen}>Delete</MenuItem>
+                </MenuList>
+            </Menu>
+            {/* Todo move modals to own components */}
+            <EditModal isEditOpen={isEditOpen} onEditClose={onEditClose} movie={movie} />
+            <DeleteModal isDeleteOpen={isDeleteOpen} onDeleteClose={onDeleteClose}/>
+        </>
     )
 }

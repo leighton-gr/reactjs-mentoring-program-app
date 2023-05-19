@@ -1,22 +1,46 @@
-import React from 'react';
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import React, { useEffect, useState } from 'react';
+import { Select } from '@chakra-ui/react';
+import { sortBy } from '../../redux/appSlice';
+import { useDispatch } from 'react-redux';
 
-export const ResultSort =  () => {
+export const dropdownData = {
+    options: [
+        {
+            label: 'Release Date',
+            value: 'release_date',
+        },
+        {
+            label: 'Title',
+            value: 'title',
+        },
+    ],
+};
+
+const SORT_TYPES = {
+    DESC: 'desc',
+    ASC: 'asc',
+}
+
+export const ResultSort = () => {
+    const dispatch = useDispatch();
+
+    const handleCallback = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        console.log(e.target.value);
+        dispatch(sortBy(e.target.value));
+    }
+
+    useEffect(() => {
+        dispatch(sortBy(dropdownData.options[0].value));
+    }, []);
+
     return (
         <>
             <span>Sort By</span>
-            <Menu>
-                <MenuButton as={Button}>
-                    Actions
-                </MenuButton>
-                <MenuList>
-                    <MenuItem>Download</MenuItem>
-                    <MenuItem>Create a Copy</MenuItem>
-                    <MenuItem>Mark as Draft</MenuItem>
-                    <MenuItem>Delete</MenuItem>
-                    <MenuItem>Attend a Workshop</MenuItem>
-                </MenuList>
-            </Menu>
+            <Select onChange={handleCallback}>
+                {dropdownData.options.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+            </Select>
         </>
     )
 }

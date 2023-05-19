@@ -1,17 +1,40 @@
-import React from 'react';
-import { ResultFilter } from "../ResultFilter";
-import { ResultSort } from "../ResultSort";
-import { ResultCount } from "../ResultCount";
+import React, { useEffect, useState } from 'react';
+import { ResultSort } from '../ResultSort';
 
-// Todo make props
-export const COUNT = 39;
+import { useGetMoviesBySortOrderQuery } from '../../redux/api';
+import { ResultCount } from '../ResultCount';
+import { ResultFilter } from '../ResultFilter';
+import { useTypedSelector } from '../../redux/store';
+import { selectSortBy } from '../../redux/appSlice';
 
 export const MovieSection = () => {
+    const sortBy = useTypedSelector(selectSortBy);
+
+    const { data: movieData, isLoading } = useGetMoviesBySortOrderQuery({ sortBy: sortBy, sortOrder: 'desc' });
+    const [movies, setMovies] = useState([]);
+
+    useEffect(() => {
+        if(movieData) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore this property does exist? Not ideal
+            setMovies(movieData.data)
+        }
+    })
+
+    // todo better error handling
+    if (isLoading) {
+        return <div>Loading!</div>
+    }
+
     return (
         <>
-            <ResultFilter/>
-            <ResultSort/>
-            <ResultCount count={COUNT}/>
+            <ResultSort />
+            {movies &&
+                <>
+                    <ResultCount count={movies.length}/>
+                    <ResultFilter movieData={movies}/>
+                </>
+            }
         </>
     )
 }
