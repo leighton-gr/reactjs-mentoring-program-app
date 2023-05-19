@@ -12,7 +12,9 @@ import { MovieDetailsFlagContextProvider, MovieProvider } from './providers/Movi
 
 import { MovieContext } from './providers/MovieProvider';
 import { Movie } from './types/types';
-import { getAllMovies } from './api/movies';
+import { useDispatch, useSelector } from 'react-redux';
+import { AnyAction } from '@reduxjs/toolkit';
+import { useGetMoviesQuery } from './redux/api';
 
 // sets default styles
 const theme = extendTheme({
@@ -28,20 +30,17 @@ const theme = extendTheme({
 const buttonColorScheme = 'red';
 
 export const App = () => {
-    // todo search term
     return (
         <ChakraProvider theme={theme}>
-            <MovieProvider>
-                <div className="application__body">
-                    <ErrorBoundary>
-                        <HeaderBanner />
-                    </ErrorBoundary>
-                    <ErrorBoundary>
-                            <MovieSection />
-                    </ErrorBoundary>
-                </div>
-            </MovieProvider>
+            <div className="application__body">
+                <ErrorBoundary>
+                    <HeaderBanner/>
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <MovieSection />
+                </ErrorBoundary>
+            </div>
         </ChakraProvider>
-    )
+)
 }
 export default App;

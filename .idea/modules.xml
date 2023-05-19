@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../MoviesAPI.ReactJS/.idea/MoviesAPI.ReactJS.iml" filepath="$PROJECT_DIR$/../MoviesAPI.ReactJS/.idea/MoviesAPI.ReactJS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../F/barcadia/.idea/barcadia.iml" filepath="$PROJECT_DIR$/../F/barcadia/.idea/barcadia.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/reactjs-mentoring-program-app.iml" filepath="$PROJECT_DIR$/.idea/reactjs-mentoring-program-app.iml" />
     </modules>
   </component>

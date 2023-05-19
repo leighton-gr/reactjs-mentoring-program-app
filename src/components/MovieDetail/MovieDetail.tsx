@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 
 export type Props = {
     title: string;
-    genre: string;
+    genres: string[];
     releaseDate: string;
 }
 
-export const MovieDetail = ({ title, genre, releaseDate }: Props) => {
+export const MovieDetail = ({ title, genres, releaseDate }: Props) => {
     return (
         <>
             <h2>{title}</h2>
-            <p>{genre}</p>
+            <p>{genres}</p>
             <p>{releaseDate}</p>
         </>
     )
@@ -19,6 +19,6 @@ export const MovieDetail = ({ title, genre, releaseDate }: Props) => {
 
 MovieDetail.propTypes = {
     title: PropTypes.string,
-    genre: PropTypes.string,
+    genre: PropTypes.array,
     releaseDate: PropTypes.string,
 }

@@ -1,30 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useId } from 'react';
 import {
     Button,
     FormControl,
-    FormLabel, Heading,
+    FormLabel,
+    Heading,
     Input, Select,
     useDisclosure
 } from '@chakra-ui/react';
 import { ModalTemplate } from '../ModalTemplate';
-import { addMovie } from '../../api/movies';
 import { useFormik } from 'formik';
 import { SearchBar } from '../SearchBar';
 import { ExtendedMovieDetail } from '../ExtendedMovieDetail/ExtendedMovieDetail';
-import { MovieContext } from '../../providers/MovieProvider';
-import { Movie } from '../../types/types';
+import { useAddMovieMutation } from '../../redux/api';
+import { selectShowSearch } from '../../redux/appSlice';
+import { useTypedSelector } from '../../redux/store';
 
 const buttonColorScheme = 'red';
 
 export const HeaderBanner = () => {
+    const showSearchBar = useTypedSelector(selectShowSearch);
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [movieContext] = useContext(MovieContext);
-    //todo use prop
-    const showExtendedMovieDetails = false;
-
-    const movieData = movieContext.map((movies: Movie[]) => movies);
-
-    const formTypeId = 'addMovieForm';
+    const [ addMovie ] = useAddMovieMutation();
+    const formTypeId = useId();
 
     const formik = useFormik({
         initialValues: {
@@ -35,10 +32,9 @@ export const HeaderBanner = () => {
             image: 'https://picsum.photos/300/400'
         },
         onSubmit: async (values) => {
-            await addMovie(values).catch((error) => console.log(error));
+            await addMovie(values);
         },
     })
-
 
     return (
         <>
@@ -61,9 +57,9 @@ export const HeaderBanner = () => {
                     </FormControl>
                 </form>
             </ModalTemplate>
-            {showExtendedMovieDetails ? (
-                <ExtendedMovieDetail movie={movieData}/>
-            ) : <SearchBar /> }
+            {showSearchBar ? (
+                <SearchBar />
+            ) : <ExtendedMovieDetail /> }
         </>
     )
 }
