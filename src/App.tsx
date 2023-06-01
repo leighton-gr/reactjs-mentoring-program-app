@@ -8,13 +8,11 @@ import './styles.scss';
 
 import ErrorBoundary from './ErrorBoundary';
 import { ErrorBoundaryFallback } from './components/ErrorBoundaryFallback';
-import { MovieDetailsFlagContextProvider, MovieProvider } from './providers/MovieProvider';
 
-import { MovieContext } from './providers/MovieProvider';
 import { Movie } from './types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from '@reduxjs/toolkit';
-import { useGetMoviesQuery } from './redux/api';
+import {  MultiSelectTheme } from 'chakra-multiselect'
 
 // sets default styles
 const theme = extendTheme({
@@ -25,6 +23,9 @@ const theme = extendTheme({
             },
         },
     },
+    components: {
+        MultiSelect: MultiSelectTheme
+    }
 })
 
 const buttonColorScheme = 'red';

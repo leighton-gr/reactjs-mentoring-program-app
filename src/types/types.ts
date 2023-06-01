@@ -3,13 +3,12 @@ export type MovieResponse = {
 }
 
 export type Movie = {
-    id: number;
+    id: string;
     title: string;
     release_date: string;
     poster_path: string;
     overview: string;
     genres: string[];
-    image: string;
     budget: number;
     revenue: number;
     runtime: number;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Select } from '@chakra-ui/react';
 import { sortBy } from '../../redux/appSlice';
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,10 @@ export const dropdownData = {
             label: 'Title',
             value: 'title',
         },
+        {
+            label: 'Genre',
+            value: 'genre',
+        },
     ],
 };
 
@@ -25,7 +29,7 @@ export const ResultSort = () => {
     const dispatch = useDispatch();
 
     const handleCallback = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(e.target.value);
+        console.log('sort');
         dispatch(sortBy(e.target.value));
     }
 

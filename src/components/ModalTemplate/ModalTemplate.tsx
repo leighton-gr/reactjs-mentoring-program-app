@@ -42,7 +42,6 @@ export const ModalTemplate = ({
                         <Button colorScheme="blue" mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        {/*Add reset and confirm buttons*/}
                         <Button form={formTypeId} variant="ghost" onClick={onClose} type='submit'>
                             Confirm
                         </Button>

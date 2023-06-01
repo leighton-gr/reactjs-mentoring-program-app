@@ -1,20 +1,20 @@
 import React from 'react';
 import { ModalTemplate } from './ModalTemplate';
 import { Movie } from '../../types/types';
-import { useDeleteMovieMutation, useUpdateMovieMutation } from '../../redux/api';
+import { useDeleteMovieMutation } from '../../redux/api';
 
 type Props = {
     isDeleteOpen: boolean;
     onDeleteClose: () => void;
-    movieToDelete?: Movie;
+    movie?: Movie;
 }
 
-export const DeleteModal = ({ isDeleteOpen, onDeleteClose, movieToDelete }: Props) => {
+export const DeleteModal = ({ isDeleteOpen, onDeleteClose, movie }: Props) => {
     const [deleteMovie] = useDeleteMovieMutation();
 
     const deleteMovieOnClose = async () => {
         onDeleteClose();
-        await deleteMovie(movieToDelete).catch(console.error);
+        await deleteMovie(movie.id).catch(console.error);
     }
 
     return (

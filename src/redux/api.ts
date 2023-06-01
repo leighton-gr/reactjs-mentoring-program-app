@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Movie, MovieResponse } from '../types/types';
 
 type GetMoviesArgs = {
@@ -20,11 +20,21 @@ export const moviesApi = createApi({
             query: () => 'movies',
             providesTags: ['Movie']
         }),
-        getMoviesBySortOrder: builder.query<MovieResponse[], GetMoviesArgs>({
+        getMoviesBySortOrder: builder.query<MovieResponse, GetMoviesArgs>({
             query: (args) => {
                 const { sortBy, sortOrder } = args;
 
                 return { url: `movies?sortBy=${sortBy}&sortOrder=${sortOrder}` }
+            },
+            providesTags: ['Movie']
+        }),
+        getMoviesByGenre: builder.query<MovieResponse, GetMoviesArgs>({
+            query: (args) => {
+                const { filter } = args;
+
+                console.log(args);
+
+                return { url: `movies?filter=${filter}` }
             },
             providesTags: ['Movie']
         }),
@@ -33,16 +43,20 @@ export const moviesApi = createApi({
             invalidatesTags: ['Movie']
         }),
         updateMovie: builder.mutation<Movie, Partial<Movie>>({
-            query: (movie) => ({ url: 'movies', method: 'PUT', body: movie })
+            query: (movie) => ({ url: 'movies', method: 'PUT', body: movie }),
+            invalidatesTags: ['Movie']
         }),
-        deleteMovie: builder.mutation<Movie, Movie>({
-            query: (movie) => ({ url: 'movies', method: 'DELETE', body: movie })
+        deleteMovie: builder.mutation<{ success: boolean; id: string }, string>({
+            query: (id) => ({ url: `movies/${id}`, method: 'DELETE', body: id }),
+            invalidatesTags: ['Movie']
         }),
     })
 })
 
 export const {
+    useGetMoviesQuery,
     useGetMoviesBySortOrderQuery,
+    useLazyGetMoviesByGenreQuery,
     useAddMovieMutation,
     useUpdateMovieMutation,
     useDeleteMovieMutation
