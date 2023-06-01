@@ -12,19 +12,20 @@ type Props = {
 }
 
 export const EditModal = ({ isEditOpen, onEditClose, movie }: Props) => {
-    const [updateMovie] = useUpdateMovieMutation();
+    const [ updateMovie ] = useUpdateMovieMutation();
     const formTypeId = useId();
 
     const formik = useFormik({
         initialValues: {
             id: movie.id,
             title: movie.title,
-            release_date: movie.release_date,
-            genres: movie.genres,
             poster_path: movie.poster_path,
+            release_date: movie.release_date,
+            overview: movie.overview,
+            genres: movie.genres,
             budget: movie.budget,
             revenue: movie.revenue,
-            runtime: movie.runtime,
+            runtime: movie.runtime || 0,
             tagline: movie.tagline,
             vote_average: movie.vote_average,
             vote_count: movie.vote_count,
@@ -39,23 +40,16 @@ export const EditModal = ({ isEditOpen, onEditClose, movie }: Props) => {
             {/*Todo trigger completion modal*/}
             <form id={formTypeId} onSubmit={formik.handleSubmit}>
                 <FormControl isRequired>
-                    <FormLabel>Title</FormLabel>
-                    <Input placeholder="Title"
-                           onChange={formik.handleChange}
-                           value={formik.values.title}/>
+                    <FormLabel>First name</FormLabel>
+                    <Input placeholder="Title" id='title' type='text' onChange={formik.handleChange} value={formik.values.title}/>
                     <FormLabel>Release Date</FormLabel>
-                    <Input type="date"
-                           onChange={formik.handleChange}
-                           value={new Date(formik.values.release_date).toISOString().slice(0, 10)}/>
-                    <FormLabel>Genre</FormLabel>
-                    <Select placeholder={movie.genres[0]}
-                            onChange={formik.handleChange}
-                            value={formik.values.genres[0]}
-                    >
-                        {movie.genres.map((genre) => (
-                            <option key={genre}>{genre}</option>
-                        ))}
-                    </Select>
+                    <Input placeholder="Select Date" id='release_date' type="date" onChange={formik.handleChange} value={formik.values.release_date}/>
+                    <FormLabel>Poster Path</FormLabel>
+                    <Input placeholder="Poster Path" id='poster_path' type="url" onChange={formik.handleChange} value={formik.values.poster_path}/>
+                    <FormLabel>Overview</FormLabel>
+                    <Input placeholder="Overview" id='overview' type="text" onChange={formik.handleChange} value={formik.values.overview}/>
+                    <FormLabel>Runtime</FormLabel>
+                    <Input placeholder="Runtime" id='runtime' type="number" onChange={formik.handleChange} value={formik.values.runtime}/>
                 </FormControl>
             </form>
         </ModalTemplate>

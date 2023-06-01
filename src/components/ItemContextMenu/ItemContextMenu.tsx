@@ -32,7 +32,7 @@ export const ItemContextMenu = ({ movie }: Props) => {
             </Menu>
             {/* Todo move modals to own components */}
             <EditModal isEditOpen={isEditOpen} onEditClose={onEditClose} movie={movie} />
-            <DeleteModal isDeleteOpen={isDeleteOpen} onDeleteClose={onDeleteClose}/>
+            <DeleteModal isDeleteOpen={isDeleteOpen} onDeleteClose={onDeleteClose} movie={movie}/>
         </>
     )
 }
