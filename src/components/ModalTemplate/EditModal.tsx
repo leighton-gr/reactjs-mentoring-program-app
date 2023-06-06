@@ -1,5 +1,5 @@
 import { ModalTemplate } from './ModalTemplate';
-import { FormControl, FormLabel, Input, Select } from '@chakra-ui/react';
+import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import React, { useId } from 'react';
 import { Movie } from '../../types/types';
 import { useFormik } from 'formik';
@@ -26,17 +26,24 @@ export const EditModal = ({ isEditOpen, onEditClose, movie }: Props) => {
             budget: movie.budget,
             revenue: movie.revenue,
             runtime: movie.runtime || 0,
-            tagline: movie.tagline,
+            tagline: movie.tagline || 'default',
             vote_average: movie.vote_average,
             vote_count: movie.vote_count,
         },
         onSubmit: async (values) => {
+            console.log('onSubmit');
             await updateMovie(values);
         },
+        validateOnChange: true,
+        enableReinitialize: true,
+        isInitialValid: (v: boolean) => {
+            console.log(v);
+            return v;
+        }
     })
 
     return (
-        <ModalTemplate isOpen={isEditOpen} onClose={onEditClose} title={'Edit Movie'}>
+        <ModalTemplate isOpen={isEditOpen} onClose={onEditClose} title={'Edit Movie'} formTypeId={formTypeId}>
             {/*Todo trigger completion modal*/}
             <form id={formTypeId} onSubmit={formik.handleSubmit}>
                 <FormControl isRequired>

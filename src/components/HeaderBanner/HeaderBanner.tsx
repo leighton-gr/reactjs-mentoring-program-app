@@ -5,7 +5,6 @@ import {
     FormLabel,
     Heading,
     Input,
-    Select,
     useDisclosure
 } from '@chakra-ui/react';
 import { ModalTemplate } from '../ModalTemplate';
