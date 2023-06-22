@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react';
 import { Select } from '@chakra-ui/react';
-import { sortBy } from '../../redux/appSlice';
+import { filteredMovies, sortBy } from '../../redux/appSlice';
 import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
+import { useLazyGetMoviesBySortOrderQuery } from '../../redux/api';
 
 export const dropdownData = {
     options: [
+        {
+            label: 'Popularity',
+            value: 'vote_average',
+        },
         {
             label: 'Release Date',
             value: 'release_date',
@@ -27,13 +33,17 @@ const SORT_TYPES = {
 
 export const ResultSort = () => {
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [trigger] = useLazyGetMoviesBySortOrderQuery();
 
-    const handleCallback = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        dispatch(sortBy(e.target.value));
+    const handleCallback = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const { data } = await trigger({ search: searchParams.get('search'), sortBy: e.target.value, sortOrder: SORT_TYPES.DESC }).unwrap();
+        setSearchParams(`?search=${searchParams.get('search')}&sortBy=${e.target.value}&sortOrder=${SORT_TYPES.DESC}`);
+        dispatch(filteredMovies(data));
     }
 
     useEffect(() => {
-        dispatch(sortBy(dropdownData.options[0].value));
+        dispatch(sortBy(dropdownData.options[3].value));
     }, []);
 
     return (

@@ -31,13 +31,11 @@ export const EditModal = ({ isEditOpen, onEditClose, movie }: Props) => {
             vote_count: movie.vote_count,
         },
         onSubmit: async (values) => {
-            console.log('onSubmit');
             await updateMovie(values);
         },
         validateOnChange: true,
         enableReinitialize: true,
         isInitialValid: (v: boolean) => {
-            console.log(v);
             return v;
         }
     })

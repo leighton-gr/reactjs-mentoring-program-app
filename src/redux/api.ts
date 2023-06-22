@@ -20,18 +20,27 @@ export const moviesApi = createApi({
             query: () => 'movies',
             providesTags: ['Movie']
         }),
+        getMoviesBySearchTerm: builder.query<MovieResponse, GetMoviesArgs>({
+            query: (args) => {
+                const { search } = args
+
+                return { url: `movies?search=${search}&searchBy=title` }
+            },
+            providesTags: ['Movie']
+        }),
         getMoviesBySortOrder: builder.query<MovieResponse, GetMoviesArgs>({
             query: (args) => {
-                const { sortBy, sortOrder } = args;
+                const { search, sortBy, sortOrder } = args;
 
-                return { url: `movies?sortBy=${sortBy}&sortOrder=${sortOrder}` }
+                return { url: `movies?search=${search}&sortBy=${sortBy}&searchBy=title&sortOrder=${sortOrder}` }
             },
             providesTags: ['Movie']
         }),
         getMoviesByGenre: builder.query<MovieResponse, GetMoviesArgs>({
             query: (args) => {
-                const { filter } = args
-                return { url: `movies?filter=${filter}` }
+                const { search, filter } = args
+
+                return { url: `movies?search=${search}&searchBy=title&filter=${filter}` }
             },
             providesTags: ['Movie']
         }),
@@ -53,6 +62,8 @@ export const moviesApi = createApi({
 export const {
     useGetMoviesQuery,
     useGetMoviesBySortOrderQuery,
+    useLazyGetMoviesBySortOrderQuery,
+    useLazyGetMoviesBySearchTermQuery,
     useLazyGetMoviesByGenreQuery,
     useAddMovieMutation,
     useUpdateMovieMutation,

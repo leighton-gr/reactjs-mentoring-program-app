@@ -3,6 +3,7 @@ import './ItemImage.module.scss';
 import { useDispatch } from 'react-redux';
 import { selectedMovie, shouldShowSearch } from '../../redux/appSlice';
 import { Movie } from '../../types/types';
+import { useSearchParams } from 'react-router-dom';
 
 type Props = {
     imageUrl?: string;
@@ -11,10 +12,16 @@ type Props = {
 
 export const ItemImage = ({ imageUrl, movie }: Props) => {
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const handleClick = () => {
-        dispatch(shouldShowSearch());
+        // navigate to route with movie id, which shows search?
+        dispatch(shouldShowSearch(false));
+
+
         dispatch(selectedMovie(movie))
+        setSearchParams(`movie=${movie.id}`);
+
     };
 
     return (

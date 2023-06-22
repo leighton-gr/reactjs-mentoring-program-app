@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { HeaderBanner } from './components/HeaderBanner';
 
 import { Button, ChakraProvider, extendTheme, Input } from '@chakra-ui/react'
@@ -12,7 +12,9 @@ import { ErrorBoundaryFallback } from './components/ErrorBoundaryFallback';
 import { Movie } from './types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from '@reduxjs/toolkit';
-import {  MultiSelectTheme } from 'chakra-multiselect'
+import { MultiSelectTheme } from 'chakra-multiselect'
+import { useGetMoviesBySortOrderQuery } from './redux/api';
+import { filteredMovies } from './redux/appSlice';
 
 // sets default styles
 const theme = extendTheme({
@@ -31,6 +33,15 @@ const theme = extendTheme({
 const buttonColorScheme = 'red';
 
 export const App = () => {
+    const dispatch = useDispatch();
+    const { data: movieData } = useGetMoviesBySortOrderQuery({ search: '', sortBy: 'vote_average', sortOrder: 'desc' });
+
+    useEffect(() => {
+        if (movieData) {
+            dispatch(filteredMovies(movieData.data))
+        }
+    }, [movieData])
+
     return (
         <ChakraProvider theme={theme}>
             <div className="application__body">
@@ -38,10 +49,10 @@ export const App = () => {
                     <HeaderBanner/>
                 </ErrorBoundary>
                 <ErrorBoundary>
-                    <MovieSection />
+                    <MovieSection/>
                 </ErrorBoundary>
             </div>
         </ChakraProvider>
-)
+    )
 }
 export default App;

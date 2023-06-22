@@ -1,23 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ResultSort } from '../ResultSort';
 
-import { useGetMoviesBySortOrderQuery } from '../../redux/api';
 import { ResultFilter } from '../ResultFilter';
 import { useTypedSelector } from '../../redux/store';
-import { selectSortBy } from '../../redux/appSlice';
+import { selectFilteredMovies } from '../../redux/appSlice';
 import { ResultCount } from '../ResultCount';
+import { Movie } from '../../types/types';
 
 export const MovieSection = () => {
-    const sortBy = useTypedSelector(selectSortBy);
-    const { data: movieData, isLoading } = useGetMoviesBySortOrderQuery({ sortBy: sortBy, sortOrder: 'desc' });
+    const [data, setData] = useState<Movie[]>();
+    const initialFilteredMoviesResponse = useTypedSelector(selectFilteredMovies);
+
+    // before, result sort would dispatch an action with the relevant sort query key, then
+    // wherever the data is needed (result filter, would make a request to the API with the relevant query key
+
+    useEffect(() => {
+        setData(initialFilteredMoviesResponse);
+    }, [initialFilteredMoviesResponse])
 
     return (
         <>
             <ResultSort/>
-            {!isLoading && movieData.data ? (
+            {data ? (
                 <>
-                    <ResultCount count={movieData?.data.length}/>
-                    <ResultFilter movieData={movieData?.data}/>
+                    <ResultCount count={data?.length}/>
+                    <ResultFilter movieData={data}/>
                 </>
             ) : (
                 <div>Loading...</div>

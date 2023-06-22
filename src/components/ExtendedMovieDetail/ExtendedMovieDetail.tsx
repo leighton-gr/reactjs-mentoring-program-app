@@ -9,7 +9,7 @@ export const ExtendedMovieDetail = () => {
     const movie = useTypedSelector(selectMovie);
 
     const handleClick = () => {
-        dispatch(shouldShowSearch());
+        dispatch(shouldShowSearch(true));
     };
 
     return (
