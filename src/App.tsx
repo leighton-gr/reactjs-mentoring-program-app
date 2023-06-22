@@ -15,6 +15,7 @@ import { AnyAction } from '@reduxjs/toolkit';
 import { MultiSelectTheme } from 'chakra-multiselect'
 import { useGetMoviesBySortOrderQuery } from './redux/api';
 import { filteredMovies } from './redux/appSlice';
+import { useParams } from 'react-router-dom';
 
 // sets default styles
 const theme = extendTheme({
@@ -34,9 +35,12 @@ const buttonColorScheme = 'red';
 
 export const App = () => {
     const dispatch = useDispatch();
-    const { data: movieData } = useGetMoviesBySortOrderQuery({ search: '', sortBy: 'vote_average', sortOrder: 'desc' });
+    const { search } = useParams();
+    const { data: movieData } = useGetMoviesBySortOrderQuery({ search: search || '', sortBy: 'vote_average', sortOrder: 'desc' });
 
     useEffect(() => {
+        console.log('search', search);
+
         if (movieData) {
             dispatch(filteredMovies(movieData.data))
         }

@@ -33,7 +33,6 @@ export const TabsList = () => {
 
     const setFilteredMovies = async (filter: string) => {
         try {
-            // bug where it doesnt get current filter
             const { data } = await trigger({ search: searchParams.get('search'), filter: filter }).unwrap();
             setSearchParams(`?search=${searchParams.get('search')}&filter=${filter}`);
             dispatch(filteredMovies(data));

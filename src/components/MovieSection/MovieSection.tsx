@@ -6,6 +6,7 @@ import { useTypedSelector } from '../../redux/store';
 import { selectFilteredMovies } from '../../redux/appSlice';
 import { ResultCount } from '../ResultCount';
 import { Movie } from '../../types/types';
+import { Flex } from '@chakra-ui/react';
 
 export const MovieSection = () => {
     const [data, setData] = useState<Movie[]>();
@@ -19,7 +20,7 @@ export const MovieSection = () => {
     }, [initialFilteredMoviesResponse])
 
     return (
-        <>
+        <Flex flexDirection='column'>
             <ResultSort/>
             {data ? (
                 <>
@@ -29,6 +30,6 @@ export const MovieSection = () => {
             ) : (
                 <div>Loading...</div>
             )}
-        </>
+        </Flex>
     )
 }
