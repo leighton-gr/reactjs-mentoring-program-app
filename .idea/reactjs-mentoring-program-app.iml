@@ -8,5 +8,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="MoviesAPI.ReactJS" />
+    <orderEntry type="module" module-name="barcadia" />
+    <orderEntry type="module" module-name="template-ecommerce-webapp-nextjs" />
+    <orderEntry type="module" module-name="sala-boat-service-it" />
   </component>
 </module>

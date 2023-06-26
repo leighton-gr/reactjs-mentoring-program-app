@@ -1,0 +1,7 @@
+@import '/src/styles/variables';
+
+.application__body {
+  display: flex;
+  flex-direction: column;
+  padding: var(--chakra-sizes-10);
+}
