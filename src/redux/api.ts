@@ -24,8 +24,6 @@ export const moviesApi = createApi({
             query: (args) => {
                 const { search, sortBy , filter, sortOrder } = args
 
-                console.log(search);
-
                 return { url: `movies?search=${search || ''}&searchBy=title&filter=${filter || ''}&sortBy=${sortBy || ''}&sortOrder=${sortOrder || ''}` }
             },
             providesTags: ['Movie']
@@ -65,7 +63,6 @@ export const {
     useGetMoviesQuery,
     useGetMoviesBySortOrderQuery,
     useLazyGetMoviesBySortOrderQuery,
-    useGetMoviesBySearchTermQuery,
     useLazyGetMoviesBySearchTermQuery,
     useLazyGetMoviesByGenreQuery,
     useAddMovieMutation,
