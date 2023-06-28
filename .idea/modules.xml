@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../MoviesAPI.ReactJS/.idea/MoviesAPI.ReactJS.iml" filepath="$PROJECT_DIR$/../MoviesAPI.ReactJS/.idea/MoviesAPI.ReactJS.iml" />
       <module fileurl="file://$PROJECT_DIR$/../F/sala-boat-service/barcadia/.idea/barcadia.iml" filepath="$PROJECT_DIR$/../F/sala-boat-service/barcadia/.idea/barcadia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../F/leightongrantham/.idea/leightongrantham.iml" filepath="$PROJECT_DIR$/../F/leightongrantham/.idea/leightongrantham.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/reactjs-mentoring-program-app.iml" filepath="$PROJECT_DIR$/.idea/reactjs-mentoring-program-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../F/sala-boat-service-it/.idea/sala-boat-service-it.iml" filepath="$PROJECT_DIR$/../F/sala-boat-service-it/.idea/sala-boat-service-it.iml" />
     </modules>
   </component>
 </project>

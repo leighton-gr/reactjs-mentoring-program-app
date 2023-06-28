@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Input } from '@chakra-ui/react';
 import { filteredMovies } from '../../redux/appSlice';
 import { useDispatch } from 'react-redux';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import {
     useLazyGetMoviesBySearchTermQuery
 } from '../../redux/api';
@@ -13,18 +13,23 @@ export const SearchBar = () => {
     const dispatch = useDispatch();
     const formTypeId = 'search';
     const [searchParams, setSearchParams] = useSearchParams();
+    const [currentValue, setCurrentValue] = useState<string>();
     const { search } = useParams();
     const [trigger] = useLazyGetMoviesBySearchTermQuery();
 
+    const navigate = useNavigate();
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
-        setSearchParams(`?${new URLSearchParams({ search: `${e.target.value}` })}`);
+        setCurrentValue(e.target.value);
     }
 
     const onSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        const search = searchParams.get('search');
-        const { data } = await trigger({ search: search }).unwrap();
+        const searchParam = searchParams.get('search');
+        const { data } = await trigger({ search: searchParam || currentValue }).unwrap();
+
+        navigate(`/search/${currentValue}`);
 
         dispatch(filteredMovies(data))
     }
@@ -33,7 +38,7 @@ export const SearchBar = () => {
         <>
             <form id={formTypeId} onSubmit={onSubmit}>
                 <Input onChange={handleChange}
-                       value={search || ''}
+                       defaultValue={search}
                        placeholder="What do you want to watch?"
                        type="search"
                        name="search"/>

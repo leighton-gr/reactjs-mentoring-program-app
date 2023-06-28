@@ -13,9 +13,9 @@ import { Movie } from './types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnyAction } from '@reduxjs/toolkit';
 import { MultiSelectTheme } from 'chakra-multiselect'
-import { useGetMoviesBySortOrderQuery } from './redux/api';
+import { useGetMoviesBySearchTermQuery, useGetMoviesBySortOrderQuery } from './redux/api';
 import { filteredMovies } from './redux/appSlice';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 // sets default styles
 const theme = extendTheme({
@@ -36,14 +36,28 @@ const buttonColorScheme = 'red';
 export const App = () => {
     const dispatch = useDispatch();
     const { search } = useParams();
-    const { data: movieData } = useGetMoviesBySortOrderQuery({ search: search || '', sortBy: 'vote_average', sortOrder: 'desc' });
+    const [searchParams, setSearchParams] = useSearchParams();
+    const filter = searchParams.get('filter');
+    const sortBy = searchParams.get('sortBy');
+
+    const { data: movieData } = useGetMoviesBySearchTermQuery({
+        search: search || '',
+        filter: filter || '',
+        sortBy: sortBy || '',
+        sortOrder: 'desc'
+    });
 
     useEffect(() => {
-        console.log('search', search);
-
         if (movieData) {
             dispatch(filteredMovies(movieData.data))
         }
+
+        // sets vote average, AC says empty search param but this does not ge most popular
+
+        // if (sortBy === null && filter === null && search === undefined) {
+        //     setSearchParams('?sortBy=vote_average');
+        // }
+
     }, [movieData])
 
     return (

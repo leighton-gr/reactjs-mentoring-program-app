@@ -10,5 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="MoviesAPI.ReactJS" />
     <orderEntry type="module" module-name="barcadia" />
+    <orderEntry type="module" module-name="sala-boat-service-it" />
+    <orderEntry type="module" module-name="leightongrantham" />
   </component>
 </module>

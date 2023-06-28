@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, { useEffect, useId } from 'react';
 import {
     Button,
     FormControl,
@@ -12,11 +12,13 @@ import { useFormik } from 'formik';
 import { SearchBar } from '../SearchBar';
 import { ExtendedMovieDetail } from '../ExtendedMovieDetail/ExtendedMovieDetail';
 import { useAddMovieMutation } from '../../redux/api';
-import { selectShowSearch } from '../../redux/appSlice';
+import { selectShowSearch, shouldShowSearch } from '../../redux/appSlice';
 import { useTypedSelector } from '../../redux/store';
 
 import { v4 as uuidv4 } from 'uuid';
 import { MultiSelect, useMultiSelect } from 'chakra-multiselect';
+import { useSearchParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 const buttonColorScheme = 'red';
 
@@ -25,7 +27,15 @@ export const HeaderBanner = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [ addMovie ] = useAddMovieMutation();
     const formTypeId = useId();
-    const uuid = uuidv4();
+    const [searchParams] = useSearchParams();
+    const movieId = searchParams.get('movie');
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (movieId) {
+            dispatch(shouldShowSearch(false))
+        }
+    }, [movieId])
 
     const formik = useFormik({
         initialValues: {
@@ -71,7 +81,7 @@ export const HeaderBanner = () => {
             </ModalTemplate>
             {showSearchBar ? (
                 <SearchBar />
-            ) : <ExtendedMovieDetail /> }
+            ) : <ExtendedMovieDetail currentMovie={movieId} /> }
         </>
     )
 }

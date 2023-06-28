@@ -16,15 +16,15 @@ export const moviesApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000' }),
     tagTypes: ['Movie'],
     endpoints: (builder) => ({
-        getMovies: builder.query<MovieResponse[], GetMoviesArgs>({
-            query: () => 'movies',
+        getMovies: builder.query<MovieResponse, void>({
+            query: () => 'movies?limit=100',
             providesTags: ['Movie']
         }),
         getMoviesBySearchTerm: builder.query<MovieResponse, GetMoviesArgs>({
             query: (args) => {
-                const { search } = args
+                const { search, sortBy , filter, sortOrder } = args
 
-                return { url: `movies?search=${search}&searchBy=title` }
+                return { url: `movies?search=${search || ''}&searchBy=title&filter=${filter || ''}&sortBy=${sortBy || ''}&sortOrder=${sortOrder || ''}` }
             },
             providesTags: ['Movie']
         }),
@@ -63,6 +63,7 @@ export const {
     useGetMoviesQuery,
     useGetMoviesBySortOrderQuery,
     useLazyGetMoviesBySortOrderQuery,
+    useGetMoviesBySearchTermQuery,
     useLazyGetMoviesBySearchTermQuery,
     useLazyGetMoviesByGenreQuery,
     useAddMovieMutation,
