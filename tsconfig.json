@@ -8,6 +8,9 @@
     "allowJs": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "allowSyntheticDefaultImports": true
-  }
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "esnext"],
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules"]
 }
