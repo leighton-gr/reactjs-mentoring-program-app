@@ -39,10 +39,11 @@ export const ResultFilter = ({ movieData }: Props) => {
     const [trigger] = useLazyGetMoviesBySearchTermQuery();
     const [searchParams, setSearchParams] = useSearchParams();
 
+
     const setFilteredMovies = async (filter: string) => {
         try {
             const { data } = await trigger({ search: searchParams.get('search'), filter: filter }).unwrap();
-            setSearchParams(`?search=${searchParams.get('search')}&filter=${filter}&sortBy=${searchParams.get('sortBy')}`);
+            setSearchParams(`?search=${searchParams.get('search') || ''}&filter=${filter || ''}&sortBy=${searchParams.get('sortBy') || ''}`);
             dispatch(filteredMovies(data));
         } catch (error) {
             console.log(error);
