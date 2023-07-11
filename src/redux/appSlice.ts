@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from './store';
-import { Movie, MovieResponse } from '../types/types';
+import { Movie } from '../types/types';
 import { dropdownData } from '../components/ResultSort/ResultSort';
 
 export interface AppState {

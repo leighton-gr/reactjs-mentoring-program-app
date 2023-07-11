@@ -15,10 +15,7 @@ export const ItemImage = ({ imageUrl, movie }: Props) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const handleClick = () => {
-        // navigate to route with movie id, which shows search?
         dispatch(shouldShowSearch(false));
-
-
         dispatch(selectedMovie(movie))
         setSearchParams(`movie=${movie.id}`);
 

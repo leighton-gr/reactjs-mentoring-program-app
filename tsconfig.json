@@ -9,8 +9,21 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["dom", "esnext"],
-    "esModuleInterop": true
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "esModuleInterop": true,
+    "baseUrl": "./",
   },
-  "exclude": ["node_modules"]
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module",
+  },
+  "types": ["node", "jest", "@testing-library/jest-dom"],
+  "include": ["src", "jest.setup.ts"],
+  "exclude": ["./cypress.config.ts", "node_modules"]
 }

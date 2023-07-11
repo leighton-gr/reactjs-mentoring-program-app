@@ -1,19 +1,15 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { HeaderBanner } from './components/HeaderBanner';
 
-import { Button, ChakraProvider, extendTheme, Input } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { MovieSection } from './components/MovieSection/MovieSection';
 
 import './styles.scss';
 
 import ErrorBoundary from './ErrorBoundary';
-import { ErrorBoundaryFallback } from './components/ErrorBoundaryFallback';
-
-import { Movie } from './types/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { AnyAction } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
 import { MultiSelectTheme } from 'chakra-multiselect'
-import { useGetMoviesBySearchTermQuery, useGetMoviesBySortOrderQuery } from './redux/api';
+import { useGetMoviesBySearchTermQuery } from './redux/api';
 import { filteredMovies } from './redux/appSlice';
 import { useParams, useSearchParams } from 'react-router-dom';
 
@@ -30,8 +26,6 @@ const theme = extendTheme({
         MultiSelect: MultiSelectTheme
     }
 })
-
-const buttonColorScheme = 'red';
 
 export const App = () => {
     const dispatch = useDispatch();

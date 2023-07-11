@@ -38,6 +38,8 @@ export const SearchBar = () => {
         <>
             <form id={formTypeId} onSubmit={onSubmit}>
                 <Input onChange={handleChange}
+                       id="search-input"
+                       data-testid="search-input"
                        defaultValue={search}
                        placeholder="What do you want to watch?"
                        type="search"

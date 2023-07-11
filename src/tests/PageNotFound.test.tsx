@@ -6,7 +6,7 @@ import { render } from '@testing-library/react';
 
 describe('Page not found test', () => {
     it("should render NotFoundPage", () => {
-        render(<NotFoundPage />)
+        const { debug } = render(<NotFoundPage />)
     });
 });
 

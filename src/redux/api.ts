@@ -61,10 +61,9 @@ export const moviesApi = createApi({
 
 export const {
     useGetMoviesQuery,
-    useGetMoviesBySortOrderQuery,
+    useGetMoviesBySearchTermQuery,
     useLazyGetMoviesBySortOrderQuery,
     useLazyGetMoviesBySearchTermQuery,
-    useLazyGetMoviesByGenreQuery,
     useAddMovieMutation,
     useUpdateMovieMutation,
     useDeleteMovieMutation
